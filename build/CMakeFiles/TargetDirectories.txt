@@ -1,0 +1,3 @@
+/home/gh/CLionProjects/rknn/1109/build/CMakeFiles/rebuild_cache.dir
+/home/gh/CLionProjects/rknn/1109/build/CMakeFiles/edit_cache.dir
+/home/gh/CLionProjects/rknn/1109/build/CMakeFiles/DEMO.dir
