@@ -32,7 +32,7 @@ class RknnEngin  {
     void Release() ;
 
     int forward(const Tensor<u_int8_t> &inputTensor,
-            std::vector<Tensor<float>> &outputTensors) ;
+            std::vector<Tensor<u_int8_t>> &outputTensors) ;
 
  protected:
     int loadRknnModel(std::string path);

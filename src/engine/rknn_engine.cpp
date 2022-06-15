@@ -142,7 +142,7 @@ int RknnEngin::Init(const std::string path) {
 }
 
 int RknnEngin::forward(const Tensor<u_int8_t> &inputTensor,
-                       std::vector<Tensor<float>> &outputTensors) {
+                       std::vector<Tensor<u_int8_t>> &outputTensors) {
 
   rknn_context  ctx = rknnCtx_.first;
 
@@ -170,16 +170,14 @@ int RknnEngin::forward(const Tensor<u_int8_t> &inputTensor,
   }
 
   for(uint32_t i = 0 ; i < modelInfo_.outputNum; i++) {
-    outputTensors.emplace_back(Tensor<float>(modelInfo_.outputShapes_[i]));
+    outputTensors.emplace_back(Tensor<uint8_t>(modelInfo_.outputShapes_[i]));
   }
 
   rknn_output outputs[modelInfo_.outputNum];
   for(uint32_t i = 0 ; i < modelInfo_.outputNum; i++) {
-    outputs[i].want_float = 1;
-    outputs[i].is_prealloc = 1;
-    outputs[i].index = modelInfo_.outputAttrs[i].index;
+    outputs[i].want_float = 0;
     outputs[i].buf = outputTensors[i].data();
-    outputs[i].size = outputTensors[i].size() * sizeof(float);
+    outputs[i].size = outputTensors[i].size() * sizeof(uint8_t);
   }
 
   // Get Output

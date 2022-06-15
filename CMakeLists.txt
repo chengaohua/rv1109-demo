@@ -36,13 +36,16 @@ set(OPENCV_LIBS
         libprotobuf
         libwebp
         tegra_hal
+        ittnotify
         zlib
         )
 
 add_executable(DEMO
  src/demo.cpp
  src/engine/rknn_engine.cpp
+ src/firedet/firedet.cpp
+ src/firedet/postprocess.cc
 )
 
 target_link_libraries(DEMO 
-${OPENCV_LIBS}  rknn_api dl)
+${OPENCV_LIBS}  rknn_api dl pthread)
