@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../engine/rknn_engine.h"
+#include "../common/rknn_engine.h"
 #include "opencv2/opencv.hpp"
 
 class FireDet {

@@ -41,13 +41,20 @@ set(OPENCV_LIBS
         )
 
 add_executable(DEMO
- src/demo.cpp
- src/engine/rknn_engine.cpp
- src/firedet/firedet.cpp
- src/firedet/postprocess.cc
- src/firedet/yoloV5.cpp
- 
-)
+        src/demo.cpp
+       src/common/rknn_engine.cpp
+        src/firedet/firedet.cpp
+        src/firedet/postprocess.cc
+        src/firedet/yoloV5.cpp
+       src/common/alignface.cpp )
 
-target_link_libraries(DEMO 
+target_link_libraries(DEMO
 ${OPENCV_LIBS}  rknn_api dl pthread)
+
+
+add_executable(DEMO2
+        src/yolov5demo.cpp
+       )
+
+target_link_libraries(DEMO2
+        ${OPENCV_LIBS}  rknn_api dl pthread)

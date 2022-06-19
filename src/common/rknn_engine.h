@@ -24,6 +24,7 @@ class RknnModelInfo {
 
 };
 
+
 class RknnEngin {
  public:
   RknnEngin();
@@ -34,9 +35,11 @@ class RknnEngin {
 
   void Release();
 
+  template <class T>
   int forward(const Tensor<u_int8_t> &inputTensor,
-              std::vector<Tensor<float>> &outputTensors);
+              std::vector<Tensor<T>> &outputTensors);
 
+          
  protected:
   int loadRknnModel(std::string path);
 
@@ -47,7 +50,7 @@ class RknnEngin {
  protected:
   std::pair<rknn_context, bool> rknnCtx_;
   RknnModelInfo modelInfo_;
-
+  
 };
 }  // namespace arctern
 #endif  // SRC_ENGIN_SRC_RKNN_RKNNENGIN_H_
