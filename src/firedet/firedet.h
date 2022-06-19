@@ -5,13 +5,13 @@
 
 class FireDet {
 
-public:
-FireDet();
-~FireDet();
-int Init(const std::string path);
+ public:
+  FireDet();
+  ~FireDet();
+  int Init(const std::string path);
 
-int Process(cv::Mat & img, std::vector<cv::Rect> & rects);
+  int Process(cv::Mat &img, std::vector<cv::Rect> &rects);
 
-cc::RknnEngin engine_;
+  cc::RknnEngin engine_;
 
 };

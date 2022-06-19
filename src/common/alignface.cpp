@@ -77,4 +77,49 @@ cv::Mat alignFace(std::vector<cv::Point2f> &oriPoints, std::vector<cv::Point2f> 
 
 }
 
+cv::Mat letterbox(cv::Mat & img, int net_w, int net_h) {
+  //auto &img = p->image_;
+  const auto input_w = net_w;
+  const auto input_h = net_h;
+  const auto borderValue = 114;
 
+  cv::Mat resized;
+
+  if (input_w == input_h) {
+    int dest_w(input_w), dest_h(input_h);
+    int padbottom(0), padright(0);
+    int padtop = 0;
+    int padleft = 0;
+    if (img.cols > img.rows) {
+      dest_h = static_cast<int>(img.rows * input_h / static_cast<float>(img.cols));
+      padbottom = input_h - dest_h;
+      padbottom = padbottom >= 0 ? padbottom : 0;
+    } else {
+      dest_w = static_cast<int>(img.cols * input_w / static_cast<float>(img.rows));
+      padright = input_w - dest_w;
+      padright = padright >= 0 ? padright : 0;
+    }
+
+    // 居中对齐
+    {
+      padtop = padbottom / 2;
+      padleft = padright / 2;
+      padbottom -= padtop;
+      padright -= padleft;
+    }
+
+    cv::resize(img, resized, cv::Size(dest_w, dest_h), 0.0f, 0.0f);
+    cv::copyMakeBorder(resized,
+                       resized,
+                       padtop,
+                       padbottom,
+                       padleft,
+                       padright,
+                       cv::BORDER_CONSTANT,
+                       cv::Scalar(borderValue, borderValue, borderValue));
+  } else {
+    cv::resize(img, resized, cv::Size(input_w, input_h));
+  }
+
+  return resized;
+}
