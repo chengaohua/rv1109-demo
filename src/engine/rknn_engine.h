@@ -8,41 +8,45 @@
 namespace cc {
 
 class RknnModelInfo {
-    public:
-    RknnModelInfo() =default;
-    ~RknnModelInfo() noexcept = default;
+ public:
+  RknnModelInfo() = default;
 
-    public:
-    bool isValid= false;
-    uint32_t inputNum = 0;
-    uint32_t outputNum = 0;
-    rknn_sdk_version version;
-    std::vector<rknn_tensor_attr> inputAttrs;
-    std::vector<rknn_tensor_attr> outputAttrs;
-    std::vector<TensorShape> outputShapes_; 
+  ~RknnModelInfo() noexcept = default;
+
+ public:
+  bool isValid = false;
+  uint32_t inputNum = 0;
+  uint32_t outputNum = 0;
+  rknn_sdk_version version;
+  std::vector<rknn_tensor_attr> inputAttrs;
+  std::vector<rknn_tensor_attr> outputAttrs;
+  std::vector<TensorShape> outputShapes_;
 
 };
 
-class RknnEngin  {
+class RknnEngin {
  public:
-    RknnEngin();
-    ~RknnEngin() ;
+  RknnEngin();
 
-    int Init(const std::string path) ;
-    void Release() ;
+  ~RknnEngin();
 
-    int forward(const Tensor<u_int8_t> &inputTensor,
-            std::vector<Tensor<float>> &outputTensors) ;
+  int Init(const std::string path);
 
- protected:
-    int loadRknnModel(std::string path);
-    int getModelInfo();
+  void Release();
 
-    void printTensorAttr(rknn_tensor_attr &attr);
+  int forward(const Tensor<u_int8_t> &inputTensor,
+              std::vector<Tensor<float>> &outputTensors);
 
  protected:
-    std::pair<rknn_context, bool> rknnCtx_;
-    RknnModelInfo modelInfo_;
+  int loadRknnModel(std::string path);
+
+  int getModelInfo();
+
+  void printTensorAttr(rknn_tensor_attr &attr);
+
+ protected:
+  std::pair<rknn_context, bool> rknnCtx_;
+  RknnModelInfo modelInfo_;
 
 };
 }  // namespace arctern
