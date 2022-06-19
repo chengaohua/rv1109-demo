@@ -3,7 +3,7 @@
 //
 
 #include "opencv2/opencv.hpp"
-
+#include "alignface.h"
 
 void ULsee_rigid_transform(const cv::Mat &A, const cv::Mat &B, cv::Mat &R,
                            cv::Mat &T, float &scale) {
@@ -67,17 +67,21 @@ cv::Mat imo_cv_transform_warpper(const std::vector<cv::Point2f> &facialPoints,
   return R;
 }
 
-cv::Mat alignFace(std::vector<cv::Point2f> &oriPoints, std::vector<cv::Point2f> & dstPoints, cv::Mat & img, int net_w, int net_h) {
+cv::Mat alignFace(std::vector<cv::Point2f> &oriPoints,
+                  std::vector<cv::Point2f> &dstPoints,
+                  cv::Mat &img,
+                  int net_w,
+                  int net_h) {
   auto trans = imo_cv_transform_warpper(oriPoints, dstPoints);
 
-  cv::Mat alignMat ;
+  cv::Mat alignMat;
   cv::warpAffine(img, alignMat, trans, cv::Size(net_w, net_h));
 
   return alignMat;
 
 }
 
-cv::Mat letterbox(cv::Mat & img, int net_w, int net_h) {
+cv::Mat letterbox(cv::Mat &img, int net_w, int net_h) {
   //auto &img = p->image_;
   const auto input_w = net_w;
   const auto input_h = net_h;
@@ -122,4 +126,35 @@ cv::Mat letterbox(cv::Mat & img, int net_w, int net_h) {
   }
 
   return resized;
+}
+
+int CCImage2BgrMat(const cc_image *image, cv::Mat *bgrMat) {
+  int ret = -1;
+  do {
+    if (nullptr == image || nullptr == image->data) {
+      ret = -1;
+      break;
+    }
+    unsigned char *ptr = (unsigned char *) image->data;
+    switch (image->format) {
+
+      case CC_IMAGE_BGR888: {
+        cv::Mat tmp(image->height, image->width, CV_8UC3, ptr);
+        *bgrMat = tmp;
+        break;
+      }
+
+      case CC_IMAGE_NV21: {
+//#ifdef DECODE_USE_NEON
+//                *bgrMat = getBgrMat(ptr, image->width, image->height);
+//#else
+        cv::Mat tmp(image->height * 3 / 2, image->width, CV_8UC1, ptr);
+        cvtColor(tmp, *bgrMat, cv::COLOR_YUV2BGR_NV21);
+//#endif
+        break;
+      }
+    }
+    ret = 0;
+  } while (0);
+  return ret;
 }

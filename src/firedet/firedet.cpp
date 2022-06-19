@@ -12,20 +12,20 @@ FireDet::~FireDet() {
 }
 
 int FireDet::Init(const std::string path) {
-  engine_.Init(path);
-  return 0;
+  return engine_.Init(path);
+  //return 0;
 }
 
 int FireDet::Process(cv::Mat &img, std::vector<cv::Rect> &rects) {
-
+  if(img.empty()) {
+    return -1;
+  }
   int width = 640;
   int height = 640;
   int img_width = img.cols;
   int img_height = img.rows;
 
   cv::Mat rsMat = letterbox(img, width, height);
-  //todo
-  //cv::cvtColor
 
   cv::cvtColor(rsMat, rsMat, cv::COLOR_BGR2RGB);
 
@@ -74,14 +74,14 @@ int FireDet::Process(cv::Mat &img, std::vector<cv::Rect> &rects) {
     int x2 = det_result->box.right;
     int y2 = det_result->box.bottom;
 
-    cv::rectangle(img, cv::Point(x1, y1), cv::Point(x2,y2),  cv::Scalar(0,255,0));
-
-
+    cv::Rect rect(x1, y1, x2 -x1, y2 - y1);
+    rects.push_back(rect);
+    //rects.push_back(cv::Rect)
+   // cv::rectangle(img, cv::Point(x1, y1), cv::Point(x2,y2),  cv::Scalar(0,255,0));
     // draw box
-
   }
 
-  cv::imwrite("output.jpg", img);
+ // cv::imwrite("output.jpg", img);
 
 
 
