@@ -45,6 +45,8 @@ add_executable(DEMO
  src/engine/rknn_engine.cpp
  src/firedet/firedet.cpp
  src/firedet/postprocess.cc
+ src/firedet/yoloV5.cpp
+ 
 )
 
 target_link_libraries(DEMO 
