@@ -25,8 +25,8 @@ int FireDet::Process(cv::Mat &img, std::vector<cv::Rect> &rects) {
   int img_width = img.cols;
   int img_height = img.rows;
 
-  cv::Mat rsMat = letterbox(img, width, height);
-
+  cv::Mat rsMat; // = letterbox(img, width, height);
+  cv::resize(img,rsMat, cv::Size(width, height));
   cv::cvtColor(rsMat, rsMat, cv::COLOR_BGR2RGB);
 
   cc::Tensor<u_int8_t> tensor;
