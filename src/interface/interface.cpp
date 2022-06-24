@@ -6,7 +6,7 @@
 #include "../firedet/firedet.h"
 #include "../common/alignface.h"
 
-int fire_det_create(cc_fire_det_handle *handle, const char *model) {
+int fire_det_create(cc_fire_det_handle *handle, const char *model, float thresh) {
   if (handle == nullptr || model == nullptr) {
     return -1;
   }
@@ -15,7 +15,8 @@ int fire_det_create(cc_fire_det_handle *handle, const char *model) {
 
   std::string path = model;
 
-  auto ret = fire_det->Init(model);
+std::cout<<"box_conf_threshold = "<< thresh<<std::endl;
+  auto ret = fire_det->Init(model, thresh);
 
   if (ret < 0) {
     delete fire_det;
@@ -36,7 +37,8 @@ int fire_det_exec(const cc_fire_det_handle *handle, cc_image *img, cc_rect rect[
     return -1;
   }
   std::vector<cv::Rect> rects;
-  fire_det->Process(bgrMat, rects);
+  std::vector<float>  scores;
+  fire_det->Process(bgrMat, rects, scores);
 
   auto len = rects.size() > 10 ? 10 : rects.size() ;
   for (int i = 0; i < len; i++) {
@@ -44,6 +46,7 @@ int fire_det_exec(const cc_fire_det_handle *handle, cc_image *img, cc_rect rect[
     rect[i].y = rects[i].y;
     rect[i].width = rects[i].width;
     rect[i].height = rects[i].height;
+    rect[i].conf = scores[i];
   }
 
   *size = len;

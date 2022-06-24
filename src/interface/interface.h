@@ -31,6 +31,7 @@ typedef struct cc_rect {
   float y;
   float width;
   float height;
+  float conf;  // 框可信度
 } cc_rect;
 
 /**
@@ -63,7 +64,7 @@ typedef struct {
 } cc_fire_det_handle;
 
 
-int fire_det_create(cc_fire_det_handle * handle, const char * model);
+int fire_det_create(cc_fire_det_handle * handle, const char * model,float conf_thresh);
 
 //now get top 10
 int fire_det_exec(const cc_fire_det_handle * handle, cc_image * img, cc_rect rects[10], int * size);

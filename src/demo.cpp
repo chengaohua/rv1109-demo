@@ -6,7 +6,9 @@ int main(int argc, char **argv) {
   std::string path = argv[1];
 
   cc_fire_det_handle det_handle;
-  fire_det_create(&det_handle, argv[1]);
+  //可信度阈值设置
+  float thresh = 0.3;
+  fire_det_create(&det_handle, argv[1] , thresh);
 
   //det loop
   do {

@@ -11,12 +11,13 @@ FireDet::~FireDet() {
 
 }
 
-int FireDet::Init(const std::string path) {
+int FireDet::Init(const std::string path, float thresh) {
+  std::cout<<"11box_conf_threshold = "<< conf_thresh_<<std::endl;
+  conf_thresh_ = thresh;
   return engine_.Init(path);
-  //return 0;
 }
 
-int FireDet::Process(cv::Mat &img, std::vector<cv::Rect> &rects) {
+int FireDet::Process(cv::Mat &img, std::vector<cv::Rect> &rects, std::vector<float> & scores) {
   if(img.empty()) {
     return -1;
   }
@@ -41,8 +42,9 @@ int FireDet::Process(cv::Mat &img, std::vector<cv::Rect> &rects) {
   float scale_w = (float) width / img_width;
   float scale_h = (float) height / img_height;
 
-  const float nms_threshold = NMS_THRESH;
-  const float box_conf_threshold = BOX_THRESH;
+  float nms_threshold = NMS_THRESH;
+  float box_conf_threshold = conf_thresh_;
+  std::cout<<"box_conf_threshold = "<< conf_thresh_<<std::endl;
 
   detect_result_group_t detect_result_group;
   std::vector<float> out_scales = {0.104080, 0.088612, 0.085162};
@@ -73,9 +75,10 @@ int FireDet::Process(cv::Mat &img, std::vector<cv::Rect> &rects) {
     int y1 = det_result->box.top;
     int x2 = det_result->box.right;
     int y2 = det_result->box.bottom;
-
+    
     cv::Rect rect(x1, y1, x2 -x1, y2 - y1);
     rects.push_back(rect);
+    scores.push_back(det_result->prop);
     //rects.push_back(cv::Rect)
    // cv::rectangle(img, cv::Point(x1, y1), cv::Point(x2,y2),  cv::Scalar(0,255,0));
     // draw box
