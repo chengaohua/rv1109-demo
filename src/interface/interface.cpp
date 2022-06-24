@@ -15,7 +15,7 @@ int fire_det_create(cc_fire_det_handle *handle, const char *model, float thresh)
 
   std::string path = model;
 
-std::cout<<"box_conf_threshold = "<< thresh<<std::endl;
+  //std::cout<<"box_conf_threshold = "<< thresh<<std::endl;
   auto ret = fire_det->Init(model, thresh);
 
   if (ret < 0) {

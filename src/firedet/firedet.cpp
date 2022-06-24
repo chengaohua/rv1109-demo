@@ -12,7 +12,7 @@ FireDet::~FireDet() {
 }
 
 int FireDet::Init(const std::string path, float thresh) {
-  std::cout<<"11box_conf_threshold = "<< conf_thresh_<<std::endl;
+  //std::cout<<"11box_conf_threshold = "<< conf_thresh_<<std::endl;
   conf_thresh_ = thresh;
   return engine_.Init(path);
 }
@@ -44,7 +44,7 @@ int FireDet::Process(cv::Mat &img, std::vector<cv::Rect> &rects, std::vector<flo
 
   float nms_threshold = NMS_THRESH;
   float box_conf_threshold = conf_thresh_;
-  std::cout<<"box_conf_threshold = "<< conf_thresh_<<std::endl;
+  //std::cout<<"box_conf_threshold = "<< conf_thresh_<<std::endl;
 
   detect_result_group_t detect_result_group;
   std::vector<float> out_scales = {0.104080, 0.088612, 0.085162};
