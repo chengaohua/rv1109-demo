@@ -38,7 +38,8 @@ int fire_det_exec(const cc_fire_det_handle *handle, cc_image *img, cc_rect rect[
   }
   std::vector<cv::Rect> rects;
   std::vector<float>  scores;
-  fire_det->Process(bgrMat, rects, scores);
+  std::vector<int> cls;
+  fire_det->Process(bgrMat, rects, scores, cls);
 
   auto len = rects.size() > 10 ? 10 : rects.size() ;
   for (int i = 0; i < len; i++) {
@@ -47,6 +48,8 @@ int fire_det_exec(const cc_fire_det_handle *handle, cc_image *img, cc_rect rect[
     rect[i].width = rects[i].width;
     rect[i].height = rects[i].height;
     rect[i].conf = scores[i];
+    rect[i].cls = cls[i];
+
   }
 
   *size = len;

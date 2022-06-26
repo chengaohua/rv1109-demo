@@ -27,7 +27,7 @@
 
 //#define LABEL_NALE_TXT_PATH "./model/coco_80_labels_list.txt"
 
-static char* labels[OBJ_CLASS_NUM] = {"fire", "nullptr"};
+static char* labels[OBJ_CLASS_NUM] = {"fire", "smoke"};
 
 const int anchor0[6] = {10, 13, 16, 30, 33, 23};
 const int anchor1[6] = {30, 61, 62, 45, 59, 119};
@@ -316,6 +316,7 @@ int post_process(uint8_t* input0, uint8_t* input1, uint8_t* input2, int model_in
     group->results[last_count].prop       = obj_conf;
     char* label                           = labels[id];
     strncpy(group->results[last_count].name, label, OBJ_NAME_MAX_SIZE);
+    group->results[last_count].cls = id;
 
     // printf("result %2d: (%4d, %4d, %4d, %4d), %s\n", i, group->results[last_count].box.left,
     // group->results[last_count].box.top,

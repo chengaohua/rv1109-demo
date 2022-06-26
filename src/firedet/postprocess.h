@@ -23,6 +23,7 @@ typedef struct __detect_result_t
     char name[OBJ_NAME_MAX_SIZE];
     BOX_RECT box;
     float prop;
+    int cls;
 } detect_result_t;
 
 typedef struct _detect_result_group_t

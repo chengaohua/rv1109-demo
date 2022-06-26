@@ -32,6 +32,7 @@ typedef struct cc_rect {
   float width;
   float height;
   float conf;  // 框可信度
+  int  cls;    // 类别
 } cc_rect;
 
 /**
@@ -67,6 +68,7 @@ typedef struct {
 int fire_det_create(cc_fire_det_handle * handle, const char * model,float conf_thresh);
 
 //now get top 10
+//@return  cls=0 is fire;  cls = 1 is smoke. 
 int fire_det_exec(const cc_fire_det_handle * handle, cc_image * img, cc_rect rects[10], int * size);
 
 int fire_det_destroy(cc_fire_det_handle * handle);

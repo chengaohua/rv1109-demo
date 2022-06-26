@@ -17,7 +17,7 @@ int FireDet::Init(const std::string path, float thresh) {
   return engine_.Init(path);
 }
 
-int FireDet::Process(cv::Mat &img, std::vector<cv::Rect> &rects, std::vector<float> & scores) {
+int FireDet::Process(cv::Mat &img, std::vector<cv::Rect> &rects, std::vector<float> & scores, std::vector<int> & cls) {
   if(img.empty()) {
     return -1;
   }
@@ -79,6 +79,7 @@ int FireDet::Process(cv::Mat &img, std::vector<cv::Rect> &rects, std::vector<flo
     cv::Rect rect(x1, y1, x2 -x1, y2 - y1);
     rects.push_back(rect);
     scores.push_back(det_result->prop);
+    cls.push_back(det_result->cls);
     //rects.push_back(cv::Rect)
    // cv::rectangle(img, cv::Point(x1, y1), cv::Point(x2,y2),  cv::Scalar(0,255,0));
     // draw box
