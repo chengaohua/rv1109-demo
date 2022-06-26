@@ -81,12 +81,15 @@ int FireDet::Process(cv::Mat &img, std::vector<cv::Rect> &rects, std::vector<flo
     scores.push_back(det_result->prop);
     cls.push_back(det_result->cls);
     //rects.push_back(cv::Rect)
-   // cv::rectangle(img, cv::Point(x1, y1), cv::Point(x2,y2),  cv::Scalar(0,255,0));
+    #if 0
+    cv::rectangle(img, cv::Point(x1, y1), cv::Point(x2,y2),  cv::Scalar(0,255,0));
+    #endif
     // draw box
   }
 
- // cv::imwrite("output.jpg", img);
-
+#if 0
+  cv::imwrite("output.jpg", img);
+#endif
 
 
   //postProcess;

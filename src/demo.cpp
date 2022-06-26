@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
 
   cc_fire_det_handle det_handle;
   //可信度阈值设置
-  float thresh = 0.3;
+  float thresh = 0.1;
   fire_det_create(&det_handle, argv[1] , thresh);
 
   //det loop
@@ -22,6 +22,12 @@ int main(int argc, char **argv) {
     cc_rect rects[10];
     int size = 0;
     fire_det_exec(&det_handle, &image, rects, &size);
+
+    for(int i = 0 ; i < size; i++) {
+      printf("[%f,%f,%f,%f] cls = %d conf = %f\n", rects[i].x, rects[i].y, rects[i].width, rects[i].height, rects[i].cls, rects[i].conf);
+    }
+
+    
 
     printf("det fire nums = %d\n", size);
 
