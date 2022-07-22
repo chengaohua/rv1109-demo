@@ -118,7 +118,7 @@ enum VideoCaptureAPIs {
        CAP_ARAVIS       = 2100,         //!< Aravis SDK
        CAP_OPENCV_MJPEG = 2200,         //!< Built-in OpenCV MotionJPEG codec
        CAP_INTEL_MFX    = 2300,         //!< Intel MediaSDK
-       CAP_XINE         = 2400,         //!< XINE engine (Linux)
+       CAP_XINE         = 2400,         //!< XINE common (Linux)
      };
 
 /** @brief %VideoCapture generic properties identifier.
@@ -371,11 +371,11 @@ enum { CAP_PROP_XI_DOWNSAMPLING                                 = 400, //!< Chan
        CAP_PROP_XI_GAIN_SELECTOR                                = 423, //!< Gain selector for parameter Gain allows to select different type of gains.
        CAP_PROP_XI_GAIN                                         = 424, //!< Gain in dB.
        CAP_PROP_XI_DOWNSAMPLING_TYPE                            = 426, //!< Change image downsampling type.
-       CAP_PROP_XI_BINNING_SELECTOR                             = 427, //!< Binning engine selector.
+       CAP_PROP_XI_BINNING_SELECTOR                             = 427, //!< Binning common selector.
        CAP_PROP_XI_BINNING_VERTICAL                             = 428, //!< Vertical Binning - number of vertical photo-sensitive cells to combine together.
        CAP_PROP_XI_BINNING_HORIZONTAL                           = 429, //!< Horizontal Binning - number of horizontal photo-sensitive cells to combine together.
        CAP_PROP_XI_BINNING_PATTERN                              = 430, //!< Binning pattern type.
-       CAP_PROP_XI_DECIMATION_SELECTOR                          = 431, //!< Decimation engine selector.
+       CAP_PROP_XI_DECIMATION_SELECTOR                          = 431, //!< Decimation common selector.
        CAP_PROP_XI_DECIMATION_VERTICAL                          = 432, //!< Vertical Decimation - vertical sub-sampling of the image - reduces the vertical resolution of the image by the specified vertical decimation factor.
        CAP_PROP_XI_DECIMATION_HORIZONTAL                        = 433, //!< Horizontal Decimation - horizontal sub-sampling of the image - reduces the horizontal resolution of the image by the specified vertical decimation factor.
        CAP_PROP_XI_DECIMATION_PATTERN                           = 434, //!< Decimation pattern type.
@@ -465,8 +465,8 @@ enum { CAP_PROP_XI_DOWNSAMPLING                                 = 400, //!< Chan
        CAP_PROP_XI_LUT_INDEX                                    = 542, //!< Control the index (offset) of the coefficient to access in the LUT.
        CAP_PROP_XI_LUT_VALUE                                    = 543, //!< Value at entry LUTIndex of the LUT.
        CAP_PROP_XI_TRG_DELAY                                    = 544, //!< Specifies the delay in microseconds (us) to apply after the trigger reception before activating it.
-       CAP_PROP_XI_TS_RST_MODE                                  = 545, //!< Defines how time stamp reset engine will be armed.
-       CAP_PROP_XI_TS_RST_SOURCE                                = 546, //!< Defines which source will be used for timestamp reset. Writing this parameter will trigger settings of engine (arming).
+       CAP_PROP_XI_TS_RST_MODE                                  = 545, //!< Defines how time stamp reset common will be armed.
+       CAP_PROP_XI_TS_RST_SOURCE                                = 546, //!< Defines which source will be used for timestamp reset. Writing this parameter will trigger settings of common (arming).
        CAP_PROP_XI_IS_DEVICE_EXIST                              = 547, //!< Returns 1 if camera connected and works properly.
        CAP_PROP_XI_ACQ_BUFFER_SIZE                              = 548, //!< Acquisition buffer size in buffer_size_unit. Default bytes.
        CAP_PROP_XI_ACQ_BUFFER_SIZE_UNIT                         = 549, //!< Acquisition buffer size unit in bytes. Default 1. E.g. Value 1024 means that buffer_size is in KiBytes.

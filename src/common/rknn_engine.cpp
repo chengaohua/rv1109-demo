@@ -171,12 +171,16 @@ int RknnEngin::forward(const Tensor<u_int8_t> &inputTensor,
   }
 
   for(uint32_t i = 0 ; i < modelInfo_.outputNum; i++) {
+    printf("[%d]\n]", modelInfo_.outputShapes_[i][0]);
+    printf("[%d]\n]", modelInfo_.outputShapes_[i][1]);
+    printf("[%d]\n]", modelInfo_.outputShapes_[i][2]);
+    printf("[%d]\n]", modelInfo_.outputShapes_[i][3]);
     outputTensors.emplace_back(Tensor<T>(modelInfo_.outputShapes_[i]));
   }
 
   rknn_output outputs[modelInfo_.outputNum];
   for(uint32_t i = 0 ; i < modelInfo_.outputNum; i++) {
-    outputs[i].want_float = sizeof(T) == 4;
+    outputs[i].want_float =1;
     outputs[i].is_prealloc = 1;
     outputs[i].index = modelInfo_.outputAttrs[i].index;
     outputs[i].buf = outputTensors[i].data();

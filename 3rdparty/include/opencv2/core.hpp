@@ -2369,7 +2369,7 @@ PCA compressPCA(const Mat& pcaset, int maxComponents,
 {
     PCA pca(pcaset, // pass the data
             Mat(), // we do not have a pre-computed mean vector,
-                   // so let the PCA engine to compute it
+                   // so let the PCA common to compute it
             PCA::DATA_AS_ROW, // indicate that the vectors
                                 // are stored as matrix rows
                                 // (use PCA::DATA_AS_COL if the vectors are

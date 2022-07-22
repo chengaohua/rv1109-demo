@@ -284,11 +284,11 @@ enum
     CV_CAP_PROP_XI_GAIN_SELECTOR                                = 423, // Gain selector for parameter Gain allows to select different type of gains.
     CV_CAP_PROP_XI_GAIN                                         = 424, // Gain in dB
     CV_CAP_PROP_XI_DOWNSAMPLING_TYPE                            = 426, // Change image downsampling type.
-    CV_CAP_PROP_XI_BINNING_SELECTOR                             = 427, // Binning engine selector.
+    CV_CAP_PROP_XI_BINNING_SELECTOR                             = 427, // Binning common selector.
     CV_CAP_PROP_XI_BINNING_VERTICAL                             = 428, // Vertical Binning - number of vertical photo-sensitive cells to combine together.
     CV_CAP_PROP_XI_BINNING_HORIZONTAL                           = 429, // Horizontal Binning - number of horizontal photo-sensitive cells to combine together.
     CV_CAP_PROP_XI_BINNING_PATTERN                              = 430, // Binning pattern type.
-    CV_CAP_PROP_XI_DECIMATION_SELECTOR                          = 431, // Decimation engine selector.
+    CV_CAP_PROP_XI_DECIMATION_SELECTOR                          = 431, // Decimation common selector.
     CV_CAP_PROP_XI_DECIMATION_VERTICAL                          = 432, // Vertical Decimation - vertical sub-sampling of the image - reduces the vertical resolution of the image by the specified vertical decimation factor.
     CV_CAP_PROP_XI_DECIMATION_HORIZONTAL                        = 433, // Horizontal Decimation - horizontal sub-sampling of the image - reduces the horizontal resolution of the image by the specified vertical decimation factor.
     CV_CAP_PROP_XI_DECIMATION_PATTERN                           = 434, // Decimation pattern type.
@@ -378,8 +378,8 @@ enum
     CV_CAP_PROP_XI_LUT_INDEX                                    = 542, // Control the index (offset) of the coefficient to access in the LUT.
     CV_CAP_PROP_XI_LUT_VALUE                                    = 543, // Value at entry LUTIndex of the LUT
     CV_CAP_PROP_XI_TRG_DELAY                                    = 544, // Specifies the delay in microseconds (us) to apply after the trigger reception before activating it.
-    CV_CAP_PROP_XI_TS_RST_MODE                                  = 545, // Defines how time stamp reset engine will be armed
-    CV_CAP_PROP_XI_TS_RST_SOURCE                                = 546, // Defines which source will be used for timestamp reset. Writing this parameter will trigger settings of engine (arming)
+    CV_CAP_PROP_XI_TS_RST_MODE                                  = 545, // Defines how time stamp reset common will be armed
+    CV_CAP_PROP_XI_TS_RST_SOURCE                                = 546, // Defines which source will be used for timestamp reset. Writing this parameter will trigger settings of common (arming)
     CV_CAP_PROP_XI_IS_DEVICE_EXIST                              = 547, // Returns 1 if camera connected and works properly.
     CV_CAP_PROP_XI_ACQ_BUFFER_SIZE                              = 548, // Acquisition buffer size in buffer_size_unit. Default bytes.
     CV_CAP_PROP_XI_ACQ_BUFFER_SIZE_UNIT                         = 549, // Acquisition buffer size unit in bytes. Default 1. E.g. Value 1024 means that buffer_size is in KiBytes

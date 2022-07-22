@@ -65,6 +65,8 @@ typedef struct {
 } cc_fire_det_handle;
 
 
+
+
 int fire_det_create(cc_fire_det_handle * handle, const char * model,float conf_thresh);
 
 //now get top 10
@@ -72,6 +74,12 @@ int fire_det_create(cc_fire_det_handle * handle, const char * model,float conf_t
 int fire_det_exec(const cc_fire_det_handle * handle, cc_image * img, cc_rect rects[10], int * size);
 
 int fire_det_destroy(cc_fire_det_handle * handle);
+
+int stationery_det_create(cc_fire_det_handle * handle, const char * model,float conf_thresh, int threads);
+
+int stationery_det_exec(const cc_fire_det_handle * handle, cc_image * img, cc_rect rects[100], int * size);
+
+int stationery_det_destroy(cc_fire_det_handle * handle);
 
 
 

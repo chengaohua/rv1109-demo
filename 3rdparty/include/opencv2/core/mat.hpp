@@ -1255,7 +1255,7 @@ public:
 
     /** @brief Provides a functional form of convertTo.
 
-    This is an internally used method called by the @ref MatrixExpressions engine.
+    This is an internally used method called by the @ref MatrixExpressions common.
     @param m Destination array.
     @param type Desired destination array depth (or -1 if it should be the same as the source type).
      */
