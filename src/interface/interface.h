@@ -81,6 +81,95 @@ int stationery_det_exec(const cc_det_handle * handle, cc_image * img, cc_rect re
 
 int stationery_det_destroy(cc_det_handle * handle);
 
+int multi_det_create(cc_det_handle * handle, const char * model,float conf_thresh);
+
+
+/*
+person
+bicycle
+car
+motorcycle
+airplane
+bus
+train
+truck
+boat
+traffic light
+fire hydrant
+stop sign
+parking meter
+bench
+bird
+cat
+dog
+horse
+sheep
+cow
+elephant
+bear
+zebra
+giraffe
+backpack
+umbrella
+handbag
+tie
+suitcase
+frisbee
+skis
+snowboard
+sports ball
+kite
+baseball bat
+baseball glove
+skateboard
+surfboard
+tennis racket
+bottle
+wine glass
+cup
+fork
+knife
+spoon
+bowl
+banana
+apple
+sandwich
+orange
+broccoli
+carrot
+hot dog
+pizza
+donut
+cake
+chair
+couch
+potted plant
+bed
+dining table
+toilet
+tv
+laptop
+mouse
+remote
+keyboard
+cell phone
+microwave
+oven
+toaster
+sink
+refrigerator
+book
+clock
+vase
+scissors
+teddy bear
+hair drier
+toothbrush
+*/
+int multi_det_exec(const cc_det_handle * handle, cc_image * img, cc_rect rects[100], int * size);
+
+int multi_det_destroy(cc_det_handle * handle);
+
 
 
 #endif //FIRE_DEMO_SRC_INTERFACE_INTERFACE_H_

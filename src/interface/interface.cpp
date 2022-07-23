@@ -125,3 +125,62 @@ int stationery_det_destroy(cc_det_handle *handle){
 }
 
 
+#include "../alg/multidet.h"
+
+
+int multi_det_create(cc_det_handle *handle, const char *model, float thresh) {
+  if (handle == nullptr || model == nullptr) {
+    return -1;
+  }
+
+  MultiDet *multi_det = new MultiDet;
+
+  std::string path = model;
+
+  //std::cout<<"box_conf_threshold = "<< thresh<<std::endl;
+  auto ret = multi_det->Init(model, thresh);
+
+  if (ret < 0) {
+    delete multi_det;
+  }
+
+  handle->handle = multi_det;
+
+  return 0;
+}
+
+//now get top 100 , size is rect num
+int multi_det_exec(const cc_det_handle *handle, cc_image *img, cc_rect rect[100], int * size) {
+  MultiDet *multi_det = (MultiDet *) (handle->handle);
+
+  cv::Mat bgrMat;
+  auto ret = CCImage2BgrMat(img, &bgrMat);
+  if (ret < 0) {
+    return -1;
+  }
+  std::vector<cv::Rect> rects;
+  std::vector<float>  scores;
+  std::vector<int> cls;
+  multi_det->Process(bgrMat, rects, scores, cls);
+
+  auto len = rects.size() > 100 ? 100 : rects.size() ;
+  for (int i = 0; i < len; i++) {
+    rect[i].x = rects[i].x;
+    rect[i].y = rects[i].y;
+    rect[i].width = rects[i].width;
+    rect[i].height = rects[i].height;
+    rect[i].conf = scores[i];
+    rect[i].cls = cls[i];
+
+  }
+
+  *size = len;
+  return 0;
+}
+
+int multi_det_destroy(cc_det_handle *handle){
+ MultiDet *multi_det = (MultiDet *) (handle->handle);
+ delete multi_det;
+ handle->handle = nullptr;
+  return 0;
+}
