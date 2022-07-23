@@ -21,7 +21,7 @@ class Tensor {
  public:
   Tensor() {}
 
-  explicit Tensor(const TensorShape& shape) : shape_(shape) {
+  explicit Tensor(const Shape& shape) : shape_(shape) {
     if (size() > 0) {
       data_.reset(new T[size()]());
     }
@@ -31,9 +31,9 @@ class Tensor {
 
   uint size() const { return shape_.size(); }
 
-  const TensorShape& shape() { return shape_; }
+  const Shape& shape() { return shape_; }
 
-  Tensor& reshape(const TensorShape& shape) {
+  Tensor& reshape(const Shape& shape) {
     uint oldSize = shape_.size();
     uint newSize = shape.size();
 
@@ -50,16 +50,16 @@ class Tensor {
 
   T* data() { return &(data_.get()[0]); }
 
-  const TensorShape& shape() const { return shape_; }
+  const Shape& shape() const { return shape_; }
 
   void from_cvmat(const cv::Mat& mat, bool bswap_channels = true) {
     if (bswap_channels) {
-      shape_ = TensorShape(1, mat.channels(), mat.rows, mat.cols);
+      shape_ = Shape(1, mat.channels(), mat.rows, mat.cols);
       data_.reset(new T[size()]());
       data_format_ = DataFormat::NCHW;
       swap_channels(mat);
     } else {
-      shape_ = TensorShape(1, mat.rows, mat.cols, mat.channels());
+      shape_ = Shape(1, mat.rows, mat.cols, mat.channels());
       data_.reset(new T[size()]());
       data_format_ = DataFormat::NHWC;
       memcpy((uchar*)data_.get(), (uchar*)mat.data, size() * sizeof(T));
@@ -78,7 +78,7 @@ class Tensor {
     const int nitems = c * h * w;
 
     if (bswap_channels) {
-      shape_ = TensorShape(n, c, h, w);
+      shape_ = Shape(n, c, h, w);
       data_.reset(new T[size()]());
       data_format_ = DataFormat::NCHW;
 
@@ -88,7 +88,7 @@ class Tensor {
         offset += nitems;
       }
     } else {
-      shape_ = TensorShape(n, h, w, c);
+      shape_ = Shape(n, h, w, c);
       data_.reset(new T[size()]());
       data_format_ = DataFormat::NHWC;
 
@@ -146,46 +146,12 @@ class Tensor {
     cv::split(image, input_channels);
   }
 
-  TensorShape shape_;
+  Shape shape_;
   std::shared_ptr<T> data_;
   DataFormat data_format_ = DataFormat::NCHW;
 };
 
-using OutputShape=Shape<2>;
 
-template<typename T>
-class OutputTensor{
- private:
-  OutputShape m_shape;
-  std::shared_ptr<T> m_data;
- public:
-  explicit OutputTensor(const OutputShape &shape):m_shape(shape){
-    if(size() > 0){
-      m_data.reset(new T[size()]);
-    }
-  }
-  ~OutputTensor()=default;
-  const T* data() const{
-    return &m_data.get()[0];
-  }
-  T* data() {
-    return &m_data.get()[0];
-  }
-  size_t size(){
-    return m_shape.size();
-  }
-  const OutputShape& shape() const{
-    return m_shape;
-  }
-  OutputTensor& reshape(const OutputShape& shape){
-    if(shape.size() != m_shape.size()){
-      m_shape = shape;
-      m_data.reset(new T[size()]);
-    }
-    memset(m_data.get(),0,size());
-    return *this;
-  }
-};
 
 }  // namespace cc
 #endif  // SRC_COMMON_TENSOR_H_

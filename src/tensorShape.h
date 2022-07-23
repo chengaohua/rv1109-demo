@@ -7,15 +7,16 @@
 namespace cc {
 enum DataFormat { NHWC = 0, NCHW, NTHWC, NCTHW };
 
-template<int N>
+//template<int N>
 class Shape {
  public:
   Shape() {
-    for (int i = 0; i < N; ++i) {
+    kdims = 4;
+    for (int i = 0; i < kdims; ++i) {
       val[i] = static_cast<int>(0);
     }
 
-    kdims = N;
+    //kdims = N;
   }
 
   explicit Shape(int v0) : kdims(1) { val[0] = v0; }
@@ -85,18 +86,16 @@ class Shape {
     return s;
   }
 
-  template<int M>
-  friend inline std::ostream &operator<<(std::ostream &os, const Shape<M> &shape);
+  friend inline std::ostream &operator<<(std::ostream &os, const Shape &shape);
 
  protected:
-  int val[N];
+  int val[10];
 
  private:
   int kdims = 0;  // available dimensions
 };
 
-template<int N>
-inline std::ostream &operator<<(std::ostream &os, const Shape<N> &shape) {
+inline std::ostream &operator<<(std::ostream &os, const Shape &shape) {
 //  const char * beg =  "shape dims:  ( ";
 //  os<<beg;
   for (int i = 0; i < shape.num_dims(); ++i) {
@@ -107,7 +106,7 @@ inline std::ostream &operator<<(std::ostream &os, const Shape<N> &shape) {
   return os;
 }
 
-typedef Shape<4> TensorShape;
+//typedef Shape<4> TensorShape;
 }
 
 #endif //SRC_COMMON_TENSORSHAPE_H_

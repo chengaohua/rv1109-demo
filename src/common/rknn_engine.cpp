@@ -106,18 +106,21 @@ void RknnEngin::printTensorAttr(rknn_tensor_attr &attr) {
 }
 
 using namespace cc;
-static cc::TensorShape convertRknnTensorAttr2TensorShape(rknn_tensor_attr & attr) {
-  if(attr.n_dims == 4) {
-    TensorShape shape(attr.dims[0], attr.dims[1], attr.dims[2], attr.dims[3]);
+static cc::Shape convertRknnTensorAttr2TensorShape(rknn_tensor_attr & attr) {
+  if(attr.n_dims == 5) {
+    Shape shape(attr.dims[0], attr.dims[1], attr.dims[2], attr.dims[3], attr.dims[4]);
+    return shape;
+  }else if(attr.n_dims == 4) {
+    Shape shape(attr.dims[0], attr.dims[1], attr.dims[2], attr.dims[3]);
     return shape;
   }else if (attr.n_dims == 3) {
-    TensorShape shape(1, attr.dims[0], attr.dims[1], attr.dims[2]);
+    Shape shape(1, attr.dims[0], attr.dims[1], attr.dims[2]);
     return shape;
   } else if(attr.n_dims == 2) {
-    TensorShape shape(1,1, attr.dims[0], attr.dims[1]);
+    Shape shape(1,1, attr.dims[0], attr.dims[1]);
     return shape;
   } else {
-    TensorShape shape(1,1,1,attr.dims[0]);
+    Shape shape(1,1,1,attr.dims[0]);
     return shape;
   }
 }
@@ -135,7 +138,9 @@ int RknnEngin::Init(const std::string path) {
   }
 
   for(auto &tensorAttr : modelInfo_.outputAttrs) {
-    modelInfo_.outputShapes_.emplace_back(convertRknnTensorAttr2TensorShape(tensorAttr));
+    auto shape = convertRknnTensorAttr2TensorShape(tensorAttr);
+    std::cout<<"shape = "<<shape<<std::endl;
+    modelInfo_.outputShapes_.emplace_back(shape);
   }
 
   return 0;
@@ -171,16 +176,17 @@ int RknnEngin::forward(const Tensor<u_int8_t> &inputTensor,
   }
 
   for(uint32_t i = 0 ; i < modelInfo_.outputNum; i++) {
-    printf("[%d]\n]", modelInfo_.outputShapes_[i][0]);
-    printf("[%d]\n]", modelInfo_.outputShapes_[i][1]);
-    printf("[%d]\n]", modelInfo_.outputShapes_[i][2]);
-    printf("[%d]\n]", modelInfo_.outputShapes_[i][3]);
+    // printf("[%d]\n]", modelInfo_.outputShapes_[i][0]);
+    // printf("[%d]\n]", modelInfo_.outputShapes_[i][1]);
+    // printf("[%d]\n]", modelInfo_.outputShapes_[i][2]);
+    // printf("[%d]\n]", modelInfo_.outputShapes_[i][3]);
+    std::cout<<"--->"<<i << modelInfo_.outputShapes_[i]<<std::endl;
     outputTensors.emplace_back(Tensor<T>(modelInfo_.outputShapes_[i]));
   }
 
   rknn_output outputs[modelInfo_.outputNum];
   for(uint32_t i = 0 ; i < modelInfo_.outputNum; i++) {
-    outputs[i].want_float =1;
+    outputs[i].want_float = sizeof(T) == sizeof(float);
     outputs[i].is_prealloc = 1;
     outputs[i].index = modelInfo_.outputAttrs[i].index;
     outputs[i].buf = outputTensors[i].data();

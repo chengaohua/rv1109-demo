@@ -42,16 +42,15 @@ set(OPENCV_LIBS
 
 
 add_library(cc SHARED src/common/rknn_engine.cpp
-        src/firedet/firedet.cpp
+        src/alg/firedet.cpp
         src/interface/interface.cpp
-        src/firedet/postprocess.cc
-        src/firedet/yoloV5.cpp
-        src/stationery/mnn_yolov5.cpp
+        src/alg/postprocess.cc
+        src/alg/stationerydet.cpp
         src/common/alignface.cpp)
 
       
 
-target_link_libraries(cc MNN
+target_link_libraries(cc 
 ${OPENCV_LIBS}  rknn_api dl pthread)
 
 add_executable(DEMO src/demo.cpp)
@@ -60,9 +59,11 @@ target_link_libraries(DEMO
 
 
 add_executable(DEMO2
-        src/demo2.cpp
+        src/persondetdemo.cpp
         src/common/rknn_engine.cpp
         src/persondet/persondet.cpp
+        src/persondet/util.cpp
+        src/persondet/Yolo.cpp
        )
 
 target_link_libraries(DEMO2

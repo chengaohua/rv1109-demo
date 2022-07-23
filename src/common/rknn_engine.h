@@ -20,7 +20,7 @@ class RknnModelInfo {
   rknn_sdk_version version;
   std::vector<rknn_tensor_attr> inputAttrs;
   std::vector<rknn_tensor_attr> outputAttrs;
-  std::vector<TensorShape> outputShapes_;
+  std::vector<Shape> outputShapes_;
 
 };
 

@@ -5,10 +5,10 @@
 int main(int argc, char **argv) {
   std::string path = argv[1];
 
-  cc_fire_det_handle det_handle;
+  cc_det_handle det_handle;
   //可信度阈值设置
   float thresh = 0.1;
-  stationery_det_create(&det_handle, argv[1] , thresh, 4);
+  stationery_det_create(&det_handle, argv[1] , thresh);
 
   //det loop
   do {
@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
     image.height = img.rows;
     image.format = CC_IMAGE_BGR888;
 
-    cc_rect rects[10];
+    cc_rect rects[100];
     int size = 0;
     stationery_det_exec(&det_handle, &image, rects, &size);
 

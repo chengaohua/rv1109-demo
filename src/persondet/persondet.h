@@ -1,26 +1,17 @@
-//
-// Created by gh on 2022/6/19.
-//
-
-#ifndef FIRE_DEMO_SRC_PERSON_DET__H_
-#define FIRE_DEMO_SRC_PERSON_DET__H_
+#pragma once
 
 #include "../common/rknn_engine.h"
-#include <string>
+#include "opencv2/opencv.hpp"
 
 class PersonDet {
 
  public:
   PersonDet();
   ~PersonDet();
-  int Init(const std::string path);
+  int Init(const std::string ,float conf_thresh);
 
-  // use BGR
-  int Process(cv::Mat & img, std::vector<cv::Rect> &rects);
+  int Process(cv::Mat &img, std::vector<cv::Rect> &rects, std::vector<float> &scores,std::vector<int> & cls);
 
   cc::RknnEngin engine_;
-
+  float conf_thresh_;
 };
-
-
-#endif //FIRE_DEMO_SRC_PERSON_DET__H_
