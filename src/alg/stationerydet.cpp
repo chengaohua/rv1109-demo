@@ -42,8 +42,8 @@ int StationeryDet::Process(cv::Mat &img, std::vector<cv::Rect> &rects, std::vect
   float scale_w = (float) width / img_width;
   float scale_h = (float) height / img_height;
 
-  float nms_threshold = 0.45;
-  float box_conf_threshold = 0.25;
+ // float nms_threshold = 0.45;
+  float box_conf_threshold = conf_thresh_;
   //std::cout<<"box_conf_threshold = "<< conf_thresh_<<std::endl;
 
   detect_result_group_t detect_result_group;
@@ -59,7 +59,7 @@ int StationeryDet::Process(cv::Mat &img, std::vector<cv::Rect> &rects, std::vect
                height,
                width,
                box_conf_threshold,
-               nms_threshold,
+               nms_thresh_,
                scale_w,
                scale_h,
                out_zps,

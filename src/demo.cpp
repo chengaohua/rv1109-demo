@@ -8,7 +8,7 @@ int main(int argc, char **argv) {
   cc_det_handle det_handle;
   //可信度阈值设置
   float thresh = 0.1;
-  stationery_det_create(&det_handle, argv[1] , thresh);
+  stationery_det_create(&det_handle, argv[1] , thresh, 0.45);
 
   //det loop
   do {

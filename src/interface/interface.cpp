@@ -67,7 +67,7 @@ int fire_det_destroy(cc_det_handle *handle){
 #include "../alg/stationerydet.h"
 
 
-int stationery_det_create(cc_det_handle *handle, const char *model, float thresh) {
+int stationery_det_create(cc_det_handle *handle, const char *model, float thresh, float nms_thresh) {
   if (handle == nullptr || model == nullptr) {
     return -1;
   }
@@ -82,6 +82,8 @@ int stationery_det_create(cc_det_handle *handle, const char *model, float thresh
   if (ret < 0) {
     delete sta_det;
   }
+
+  sta_det->nms_thresh_ = nms_thresh;
 
   handle->handle = sta_det;
 

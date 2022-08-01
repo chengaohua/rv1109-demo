@@ -153,6 +153,12 @@ int CCImage2BgrMat(const cc_image *image, cv::Mat *bgrMat) {
 //#endif
         break;
       }
+      case CC_IMAGE_NV12: {
+
+        cv::Mat tmp(image->height * 3 / 2, image->width, CV_8UC1, ptr);
+        cvtColor(tmp, *bgrMat, cv::COLOR_YUV2BGR_NV12);
+        break;
+      }
     }
     ret = 0;
   } while (0);

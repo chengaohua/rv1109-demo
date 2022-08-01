@@ -11,6 +11,7 @@
 typedef enum {
   CC_IMAGE_BGR888 = 0,
   CC_IMAGE_NV21,
+  CC_IMAGE_NV12,
 }cc_image_format;
 
 
@@ -75,7 +76,7 @@ int fire_det_exec(const cc_det_handle * handle, cc_image * img, cc_rect rects[10
 
 int fire_det_destroy(cc_det_handle * handle);
 
-int stationery_det_create(cc_det_handle * handle, const char * model,float conf_thresh);
+int stationery_det_create(cc_det_handle * handle, const char * model,float conf_thresh, float nms_thresh);
 
 int stationery_det_exec(const cc_det_handle * handle, cc_image * img, cc_rect rects[100], int * size);
 
